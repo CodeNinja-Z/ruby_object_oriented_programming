@@ -136,27 +136,31 @@ $plateau_y = plateau_size[1]
 
 puts "Enter initial coordinates and direction: "
 start_position_1 = gets.chomp.split(' ')
-x = start_position_1[0].to_i
-y = start_position_1[1].to_i
-direction = start_position_1[2].upcase
+$x = start_position_1[0].to_i
+$y = start_position_1[1].to_i
+$direction = start_position_1[2].upcase
 
-DIRECTIONS = ['N', 'E', 'S', 'W'] # this is a constant
-while (x > $plateau_x || x <= 0 || y > $plateau_y || y <= 0 || !DIRECTIONS.include?(direction))
-  while x > $plateau_x || x <= 0
-    print "X-coordinate has beyonded plateau! Please enter X-coordinate again: "
-    x = gets.chomp.to_i    
-  end 
-  while y > $plateau_y || y <= 0
-    print "Y-coordinate has beyonded plateau! Please enter Y-coordinate again: "  
-    y = gets.chomp.to_i
-  end 
-  while DIRECTIONS.include?(direction) == false
-    print "There's no #{direction} direction. Please enter direction again: "
-    direction = gets.chomp
-  end 
+DIRECTIONS = ['N', 'E', 'S', 'W'] # this is a constant, you can't define a constant inside
+                                  # a method
+def check_location
+  while ($x > $plateau_x || $x <= 0 || $y > $plateau_y || $y <= 0 || !DIRECTIONS.include?($direction))
+    while $x > $plateau_x || $x <= 0
+      print "X-coordinate has beyonded plateau! Please enter X-coordinate again: "
+      $x = gets.chomp.to_i    
+    end 
+    while $y > $plateau_y || $y <= 0
+      print "Y-coordinate has beyonded plateau! Please enter Y-coordinate again: "  
+      $y = gets.chomp.to_i
+    end 
+    while DIRECTIONS.include?($direction) == false
+      print "There's no #{direction} direction. Please enter direction again: "
+      $direction = gets.chomp
+    end 
+  end
 end
 
-rover_1 = Rover.new(x, y, direction)
+check_location
+rover_1 = Rover.new($x, $y, $direction)
 rover_1.print_location
 
 puts "Enter commands: "
